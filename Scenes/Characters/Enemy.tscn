@@ -1,0 +1,54 @@
+[gd_scene load_steps=9 format=3 uid="uid://bgdfpx5kxn8j5"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_4clmw"]
+[ext_resource type="Script" path="res://Scripts/Health.gd" id="2_ldbkw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d88f8"]
+albedo_color = Color(1, 0.296128, 0.296128, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_5spjp"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_up22q"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7ooop"]
+albedo_color = Color(0.299547, 0.299547, 0.299547, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_21uc2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nbtxa"]
+size = Vector3(1, 2, 1)
+
+[node name="Enemy" type="CharacterBody3D"]
+script = ExtResource("1_4clmw")
+follow_speed = 4.0
+
+[node name="HealthSystem" type="Node3D" parent="."]
+script = ExtResource("2_ldbkw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_d88f8")
+mesh = SubResource("CapsuleMesh_5spjp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_up22q")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
+radius = 1.5
+debug_enabled = true
+
+[node name="Hand" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="Weapon" type="MeshInstance3D" parent="Hand"]
+transform = Transform3D(0.14, 0, 0, 0, 0.263592, 0, 0, 0, 0.653526, 0, 0.457303, 0.677198)
+material_override = SubResource("StandardMaterial3D_7ooop")
+mesh = SubResource("BoxMesh_21uc2")
+
+[node name="HurtBox" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HurtBox"]
+shape = SubResource("BoxShape3D_nbtxa")
+
+[connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]

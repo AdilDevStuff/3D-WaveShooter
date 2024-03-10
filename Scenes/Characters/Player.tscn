@@ -1,0 +1,51 @@
+[gd_scene load_steps=10 format=3 uid="uid://bx04i0xydox35"]
+
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_6rd3n"]
+[ext_resource type="Script" path="res://Scripts/Shooting.gd" id="2_cn7c7"]
+[ext_resource type="PackedScene" uid="uid://6ebjd8k5bc1g" path="res://Scenes/Objects/Projectile.tscn" id="3_re7d5"]
+[ext_resource type="Script" path="res://Scripts/Health.gd" id="4_plgsg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6qtfk"]
+albedo_color = Color(0.299547, 0.299547, 0.299547, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_m83oc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d2cf7"]
+albedo_color = Color(0.355317, 0.615166, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_xg8t5"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_23eby"]
+
+[node name="Player" type="CharacterBody3D" groups=["Player"]]
+script = ExtResource("1_6rd3n")
+speed = 8.0
+
+[node name="Hand" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="Weapon" type="MeshInstance3D" parent="Hand"]
+transform = Transform3D(0.14, 0, 0, 0, 0.263592, 0, 0, 0, 0.653526, 0, 0.457303, 0.677198)
+material_override = SubResource("StandardMaterial3D_6qtfk")
+mesh = SubResource("BoxMesh_m83oc")
+
+[node name="Shooting" type="Node3D" parent="." node_paths=PackedStringArray("spawn_position")]
+script = ExtResource("2_cn7c7")
+projectile = ExtResource("3_re7d5")
+spawn_position = NodePath("SpawnPosition")
+
+[node name="SpawnPosition" type="Marker3D" parent="Shooting"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.19209e-07, 0.467444, -1.00878)
+
+[node name="HealthSystem" type="Node3D" parent="."]
+script = ExtResource("4_plgsg")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 8, 6)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_d2cf7")
+mesh = SubResource("CapsuleMesh_xg8t5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_23eby")

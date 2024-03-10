@@ -1,0 +1,74 @@
+[gd_scene load_steps=10 format=3 uid="uid://bjmpugxgb6x2r"]
+
+[ext_resource type="PackedScene" uid="uid://bx04i0xydox35" path="res://Scenes/Characters/Player.tscn" id="1_65s0x"]
+[ext_resource type="Script" path="res://Scripts/World.gd" id="1_dhco0"]
+[ext_resource type="PackedScene" uid="uid://bgdfpx5kxn8j5" path="res://Scenes/Characters/Enemy.tscn" id="2_3dunr"]
+[ext_resource type="Script" path="res://Scripts/WaveSystem.gd" id="3_0rjlg"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_grwdd"]
+vertices = PackedVector3Array(-24.5, 1, -24.5, -24.5, 1, 24.5, 24.5, 1, 24.5, 24.5, 1, -24.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_23pla"]
+albedo_color = Color(0.548235, 0.683294, 0.409052, 1)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_g8mf7"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_8por2"]
+sky_material = SubResource("ProceduralSkyMaterial_g8mf7")
+
+[sub_resource type="Environment" id="Environment_cv6bv"]
+background_mode = 2
+sky = SubResource("Sky_8por2")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_dhco0")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_grwdd")
+
+[node name="Level" type="CSGCombiner3D" parent="NavigationRegion3D"]
+material_override = SubResource("StandardMaterial3D_23pla")
+use_collision = true
+
+[node name="Ground" type="CSGBox3D" parent="NavigationRegion3D/Level"]
+use_collision = true
+size = Vector3(50, 1, 50)
+
+[node name="Lighting" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Lighting"]
+environment = SubResource("Environment_cv6bv")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Lighting"]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("1_65s0x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="WaveSystem" type="Node3D" parent="."]
+script = ExtResource("3_0rjlg")
+enemies = Array[PackedScene]([ExtResource("2_3dunr")])
+spawn_extents = Vector3(20, 0, 20)
+
+[node name="EnemyAliveCheckTimer" type="Timer" parent="WaveSystem"]
+wait_time = 3.0
+autostart = true
+
+[node name="WaveCooldownTimer" type="Timer" parent="WaveSystem"]
+wait_time = 5.0
+
+[node name="SpawnDelay" type="Timer" parent="WaveSystem"]
+wait_time = 2.0
+
+[node name="SpawnedEnemies" type="Node3D" parent="WaveSystem"]
+
+[connection signal="wave_completed" from="WaveSystem" to="WaveSystem" method="_on_wave_completed"]
+[connection signal="wave_started" from="WaveSystem" to="WaveSystem" method="_on_wave_started"]
+[connection signal="timeout" from="WaveSystem/EnemyAliveCheckTimer" to="WaveSystem" method="_on_enemy_alive_check_timer_timeout"]
+[connection signal="timeout" from="WaveSystem/WaveCooldownTimer" to="WaveSystem" method="_on_wave_starting_timer_timeout"]
