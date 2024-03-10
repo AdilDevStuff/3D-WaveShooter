@@ -16,14 +16,13 @@ var is_wave_started: bool = false
 
 @onready var spawned_enemies: Node3D = $SpawnedEnemies
 
-@onready var spawn_delay: Timer = $SpawnDelay
 @onready var wave_cooldown_timer: Timer = $WaveCooldownTimer
 
 func _ready() -> void:
 	# Start the wave cool down timer at the game start
 	wave_cooldown_timer.start()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	print_rich("[color=#C22124][b] Enemies Remaining: %d [/b] [/color]" % remaining_enemies())
 
 ## Spawn random enemies from an array with a given enemy_count and spawn rate
@@ -44,7 +43,10 @@ func get_random_spawn_position(min_x, min_z, max_x, max_z):
 
 ## Get the remaining enemies left in the scene
 func remaining_enemies():
-	var enemies_left = spawned_enemies.get_child_count()
+	var enemies_left = 0
+	for enemy in spawned_enemies.get_children():
+		if enemy is CharacterBody3D:
+			enemies_left += 1
 	return enemies_left
 
 ## Returns true if all enemies are dead otherwise returns false

@@ -1,15 +1,12 @@
+class_name Shooting
 extends Node3D
 
-@export var firerate: float = 0.4
+@export var firerate: float
 @export var projectile: PackedScene
 
 @export var spawn_position: Marker3D
 
-var can_shoot: bool = true
-
-func _process(delta: float) -> void:
-	if Input.is_action_pressed("Shoot"):
-		shoot_projectile()
+var can_shoot: bool = false
 
 func shoot_projectile():
 	if can_shoot:

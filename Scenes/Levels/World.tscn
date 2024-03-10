@@ -48,8 +48,10 @@ environment = SubResource("Environment_cv6bv")
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Player" parent="." instance=ExtResource("1_65s0x")]
+[node name="Player" parent="." node_paths=PackedStringArray("shooting_component", "health_system") instance=ExtResource("1_65s0x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shooting_component = NodePath("Components/Shooting")
+health_system = NodePath("Components/HealthSystem")
 
 [node name="WaveSystem" type="Node3D" parent="."]
 script = ExtResource("3_0rjlg")
@@ -62,9 +64,6 @@ autostart = true
 
 [node name="WaveCooldownTimer" type="Timer" parent="WaveSystem"]
 wait_time = 5.0
-
-[node name="SpawnDelay" type="Timer" parent="WaveSystem"]
-wait_time = 2.0
 
 [node name="SpawnedEnemies" type="Node3D" parent="WaveSystem"]
 

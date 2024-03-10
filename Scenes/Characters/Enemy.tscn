@@ -1,7 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bgdfpx5kxn8j5"]
+[gd_scene load_steps=13 format=3 uid="uid://bgdfpx5kxn8j5"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_4clmw"]
+[ext_resource type="PackedScene" uid="uid://dwn1oclefwwxs" path="res://Assets/Components/Shooting.tscn" id="2_2fyh4"]
 [ext_resource type="Script" path="res://Scripts/Health.gd" id="2_ldbkw"]
+[ext_resource type="PackedScene" uid="uid://cpbjgjltqslvm" path="res://Scenes/Objects/EnemyProjectile.tscn" id="3_8hiib"]
+[ext_resource type="PackedScene" uid="uid://b7ptpcn67fnx4" path="res://Assets/Components/NavigationMovement.tscn" id="4_q448i"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d88f8"]
 albedo_color = Color(1, 0.296128, 0.296128, 1)
@@ -18,12 +21,15 @@ albedo_color = Color(0.299547, 0.299547, 0.299547, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_nbtxa"]
 size = Vector3(1, 2, 1)
 
-[node name="Enemy" type="CharacterBody3D"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_c12mc"]
+radius = 10.0
+
+[node name="Enemy" type="CharacterBody3D" node_paths=PackedStringArray("shooting_component", "health_component", "navigation_component")]
 script = ExtResource("1_4clmw")
 follow_speed = 4.0
-
-[node name="HealthSystem" type="Node3D" parent="."]
-script = ExtResource("2_ldbkw")
+shooting_component = NodePath("Components/Shooting")
+health_component = NodePath("Components/HealthSystem")
+navigation_component = NodePath("Components/NavigationMovement")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_d88f8")
@@ -31,11 +37,6 @@ mesh = SubResource("CapsuleMesh_5spjp")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_up22q")
-
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
-avoidance_enabled = true
-radius = 1.5
-debug_enabled = true
 
 [node name="Hand" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
@@ -50,5 +51,24 @@ mesh = SubResource("BoxMesh_21uc2")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HurtBox"]
 shape = SubResource("BoxShape3D_nbtxa")
 
-[connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]
+[node name="ShootingRange" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ShootingRange"]
+shape = SubResource("SphereShape3D_c12mc")
+
+[node name="Components" type="Node3D" parent="."]
+
+[node name="Shooting" parent="Components" node_paths=PackedStringArray("spawn_position") instance=ExtResource("2_2fyh4")]
+firerate = 1.0
+projectile = ExtResource("3_8hiib")
+spawn_position = NodePath("SpawnPosition")
+
+[node name="HealthSystem" type="Node3D" parent="Components"]
+script = ExtResource("2_ldbkw")
+
+[node name="NavigationMovement" parent="Components" node_paths=PackedStringArray("parent") instance=ExtResource("4_q448i")]
+parent = NodePath("../..")
+
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="body_entered" from="ShootingRange" to="." method="_on_shooting_range_body_entered"]
+[connection signal="body_exited" from="ShootingRange" to="." method="_on_shooting_range_body_exited"]

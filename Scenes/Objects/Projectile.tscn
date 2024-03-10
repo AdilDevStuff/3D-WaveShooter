@@ -8,7 +8,7 @@
 radius = 0.099337
 height = 0.401636
 
-[node name="Projectile" type="Area3D" groups=["Player"]]
+[node name="Projectile" type="Area3D"]
 script = ExtResource("1_33162")
 projectile_speed = 20.0
 projectile_damage = 50.0
@@ -20,3 +20,8 @@ mesh = SubResource("CapsuleMesh_1pstw")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_ehrpx")
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
+aabb = AABB(-0.0944887, -0.092321, -0.211016, 0.188977, 0.184642, 0.422032)
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier3D" to="." method="_on_visible_on_screen_notifier_3d_screen_exited"]

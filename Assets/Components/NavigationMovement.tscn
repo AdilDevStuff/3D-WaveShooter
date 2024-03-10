@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7ptpcn67fnx4"]
+
+[ext_resource type="Script" path="res://Scripts/NavigationMovement.gd" id="1_qwwqv"]
+
+[node name="NavigationMovement" type="Node3D"]
+script = ExtResource("1_qwwqv")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
+radius = 1.5
+debug_enabled = true
+
+[connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]
