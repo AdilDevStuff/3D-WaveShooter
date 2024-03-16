@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://bjmpugxgb6x2r"]
+[gd_scene load_steps=16 format=3 uid="uid://bjmpugxgb6x2r"]
 
 [ext_resource type="PackedScene" uid="uid://bx04i0xydox35" path="res://Scenes/Characters/Player.tscn" id="1_65s0x"]
 [ext_resource type="Script" path="res://Scripts/World.gd" id="1_dhco0"]
 [ext_resource type="PackedScene" uid="uid://bgdfpx5kxn8j5" path="res://Scenes/Characters/Enemy.tscn" id="2_3dunr"]
 [ext_resource type="Script" path="res://Scripts/Managers/WaveSystem.gd" id="3_0rjlg"]
 [ext_resource type="Script" path="res://Scripts/Managers/GameManager.gd" id="5_8nn06"]
+[ext_resource type="Script" path="res://Scripts/UserInterface/gameUI.gd" id="6_ymjna"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_grwdd"]
 vertices = PackedVector3Array(-23, 1, -23, -23, 1, 23, 23, 1, 23, 23, 1, -23)
@@ -33,6 +34,48 @@ glow_enabled = true
 adjustment_brightness = 0.93
 adjustment_contrast = 0.88
 adjustment_saturation = 2.49
+
+[sub_resource type="LabelSettings" id="LabelSettings_78l4r"]
+font_size = 48
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_1ghcc"]
+resource_name = "PromptEnter"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WavePrompts:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector2(1, 648), Vector2(1, 549)]
+}
+
+[sub_resource type="Animation" id="Animation_bf4ym"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WavePrompts:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 648)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8eiio"]
+_data = {
+"PromptEnter": SubResource("Animation_1ghcc"),
+"RESET": SubResource("Animation_bf4ym")
+}
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_dhco0")
@@ -68,7 +111,6 @@ enemies = Array[PackedScene]([ExtResource("2_3dunr")])
 spawn_extents = Vector3(20, 0, 20)
 
 [node name="EnemyAliveCheckTimer" type="Timer" parent="WaveSystem"]
-wait_time = 3.0
 autostart = true
 
 [node name="WaveCooldownTimer" type="Timer" parent="WaveSystem"]
@@ -78,6 +120,48 @@ wait_time = 5.0
 
 [node name="GameManager" type="Node3D" parent="."]
 script = ExtResource("5_8nn06")
+
+[node name="UserInterface" type="CanvasLayer" parent="."]
+
+[node name="GameUI" type="Control" parent="UserInterface" groups=["GameUI"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_ymjna")
+
+[node name="WavePrompts" type="Label" parent="UserInterface/GameUI"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -575.0
+offset_right = 576.0
+offset_bottom = 97.0
+grow_horizontal = 2
+grow_vertical = 0
+label_settings = SubResource("LabelSettings_78l4r")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WaveCount" type="Label" parent="UserInterface/GameUI"]
+auto_translate_mode = 1
+layout_mode = 1
+offset_left = 32.0
+offset_right = 453.0
+offset_bottom = 97.0
+text = "Wave: 0"
+label_settings = SubResource("LabelSettings_78l4r")
+vertical_alignment = 1
+
+[node name="UIAnimations" type="AnimationPlayer" parent="UserInterface/GameUI"]
+libraries = {
+"": SubResource("AnimationLibrary_8eiio")
+}
 
 [connection signal="wave_completed" from="WaveSystem" to="WaveSystem" method="_on_wave_completed"]
 [connection signal="wave_started" from="WaveSystem" to="WaveSystem" method="_on_wave_started"]

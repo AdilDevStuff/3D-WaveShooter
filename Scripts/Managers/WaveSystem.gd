@@ -11,18 +11,21 @@ signal wave_completed ## Emitted when the wave is completed.
 @export var enemy_count: float = 2 ## Max enemy count per round.
 @export var spawn_extents: Vector3 ## Random extents used for spawning enemies.
 
+var wave_count: int = 0
+
 var can_spawn: bool = false
 var is_wave_started: bool = false
 
 @onready var spawned_enemies: Node3D = $SpawnedEnemies
-
 @onready var wave_cooldown_timer: Timer = $WaveCooldownTimer
+@onready var game_ui: GameUI = get_tree().get_first_node_in_group("GameUI")
 
 func _ready() -> void:
 	# Start the wave cool down timer at the game start
 	wave_cooldown_timer.start()
 
 func _process(_delta: float) -> void:
+	game_ui.set_wave_count(wave_count)
 	print_rich("[color=#C22124][b] Enemies Remaining: %d [/b] [/color]" % remaining_enemies())
 
 ## Spawn random enemies from an array with a given enemy_count and spawn rate
@@ -69,7 +72,10 @@ func _on_enemy_alive_check_timer_timeout() -> void:
 			wave_completed.emit()
 
 func _on_wave_started() -> void:
+	wave_count += 1
 	is_wave_started = true
+	game_ui.popup_prompt(2.0)
+	game_ui.set_prompt_text("Wave Started")
 	print_rich("[color=#C22124][b] Wave Started [/b] [/color]")
 
 func _on_wave_completed() -> void:
@@ -77,7 +83,8 @@ func _on_wave_completed() -> void:
 	
 	# Increase enemy count per wave
 	enemy_count += 2
-	print_rich("[color=#64C239][b] Wave Completed [/b] [/color]")
+	game_ui.popup_prompt(4.0)
+	game_ui.set_prompt_text("Wave Completed! Starting next wave...")
 	
 	wave_cooldown_timer.start()
-	print_rich("[color=#18D5FF][b] Cool down [/b] [/color]")
+	#print_rich("[color=#18D5FF][b] Cool down [/b] [/color]")

@@ -18,7 +18,7 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		rotate_y(deg_to_rad(-event.relative.x * mouse_sensitivity))
-
+ 
 func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("Shoot"):
 		shooting_component.shoot_projectile()
