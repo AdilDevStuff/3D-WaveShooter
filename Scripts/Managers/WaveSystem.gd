@@ -41,7 +41,7 @@ func get_random_spawn_position(min_x, min_z, max_x, max_z):
 	var random_position = Vector3(random_position_x, 1.5, random_position_z)
 	return random_position
 
-## Get the remaining enemies left in the scene
+## Get the remaining enemies count left in the scene
 func remaining_enemies():
 	var enemies_left = 0
 	for enemy in spawned_enemies.get_children():
@@ -57,7 +57,7 @@ func are_all_enemies_dead():
 		return false
 
 func _on_wave_starting_timer_timeout() -> void:
-	emit_signal("wave_started")
+	wave_started.emit()
 	wave_cooldown_timer.stop()
 	can_spawn = true
 	spawn_enemy()
@@ -66,7 +66,7 @@ func _on_wave_starting_timer_timeout() -> void:
 func _on_enemy_alive_check_timer_timeout() -> void:
 	if is_wave_started:
 		if are_all_enemies_dead():
-			emit_signal("wave_completed")
+			wave_completed.emit()
 
 func _on_wave_started() -> void:
 	is_wave_started = true

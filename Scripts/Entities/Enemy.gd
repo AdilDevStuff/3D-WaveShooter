@@ -7,7 +7,7 @@ extends CharacterBody3D
 @export var health_component: HealthSystem
 @export var navigation_component: NavigationMovement
 
-@onready var player = get_tree().get_first_node_in_group("Player")
+@onready var player: Player = get_tree().get_first_node_in_group("Player")
 
 var is_in_range: bool = false
 

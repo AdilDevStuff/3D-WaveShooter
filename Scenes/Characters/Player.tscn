@@ -1,9 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://bx04i0xydox35"]
+[gd_scene load_steps=10 format=3 uid="uid://bx04i0xydox35"]
 
-[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_6rd3n"]
+[ext_resource type="Script" path="res://Scripts/Entities/Player.gd" id="1_6rd3n"]
 [ext_resource type="PackedScene" uid="uid://dwn1oclefwwxs" path="res://Assets/Components/Shooting.tscn" id="2_ojpoo"]
-[ext_resource type="PackedScene" uid="uid://c1rgj63y02aj4" path="res://Scenes/Objects/PlayerProjectile.tscn" id="3_yc837"]
-[ext_resource type="Script" path="res://Scripts/Health.gd" id="4_plgsg"]
+[ext_resource type="PackedScene" uid="uid://c1rgj63y02aj4" path="res://Scenes/Objects/Projectiles/PlayerProjectile.tscn" id="3_yc837"]
+[ext_resource type="Script" path="res://Scripts/Components/Health.gd" id="4_plgsg"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6qtfk"]
 albedo_color = Color(0.299547, 0.299547, 0.299547, 1)
@@ -15,19 +15,12 @@ albedo_color = Color(0.355317, 0.615166, 1, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_xg8t5"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iyps3"]
-albedo_color = Color(1, 0.296128, 0.296128, 1)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_vjj1c"]
-top_radius = 0.01
-bottom_radius = 0.02
-height = 8.201
-
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_23eby"]
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("shooting_component", "health_system") groups=["Player"]]
 script = ExtResource("1_6rd3n")
 speed = 8.0
+jump_force = 6.0
 shooting_component = NodePath("Components/Shooting")
 health_system = NodePath("Components/HealthSystem")
 
@@ -40,17 +33,11 @@ material_override = SubResource("StandardMaterial3D_6qtfk")
 mesh = SubResource("BoxMesh_m83oc")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 8, 6)
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 3, 5)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_d2cf7")
 mesh = SubResource("CapsuleMesh_xg8t5")
-
-[node name="AimMesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.464059, -5.04272)
-material_override = SubResource("StandardMaterial3D_iyps3")
-cast_shadow = 0
-mesh = SubResource("CylinderMesh_vjj1c")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_23eby")
