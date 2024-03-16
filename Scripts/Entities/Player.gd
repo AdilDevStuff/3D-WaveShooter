@@ -1,9 +1,11 @@
 class_name Player
 extends CharacterBody3D
 
+@export_group("Stats")
 @export var speed = 5.0
 @export var jump_force = 4.5
 
+@export_group("", "")
 @export var mouse_sensitivity: float = 0.2
 
 @export_group("Components")
@@ -24,7 +26,6 @@ func _physics_process(delta: float) -> void:
 	movement(delta)
 
 func movement(delta):
-	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta * 2
 
