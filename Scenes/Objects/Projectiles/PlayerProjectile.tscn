@@ -5,4 +5,5 @@
 
 [node name="PlayerProjectile" groups=["PlayerProjectile"] instance=ExtResource("1_r41io")]
 script = ExtResource("2_s21tj")
+projectile_speed = 50.0
 projectile_damage = 50.0

@@ -26,7 +26,7 @@ radius = 10.0
 
 [node name="Enemy" type="CharacterBody3D" node_paths=PackedStringArray("shooting_component", "health_component", "navigation_component")]
 script = ExtResource("1_4clmw")
-follow_speed = 4.0
+follow_speed = 6.0
 shooting_component = NodePath("Components/Shooting")
 health_component = NodePath("Components/HealthSystem")
 navigation_component = NodePath("Components/NavigationMovement")

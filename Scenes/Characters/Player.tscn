@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bx04i0xydox35"]
+[gd_scene load_steps=11 format=3 uid="uid://bx04i0xydox35"]
 
 [ext_resource type="Script" path="res://Scripts/Entities/Player.gd" id="1_6rd3n"]
 [ext_resource type="PackedScene" uid="uid://dwn1oclefwwxs" path="res://Assets/Components/Shooting.tscn" id="2_ojpoo"]
@@ -17,9 +17,12 @@ albedo_color = Color(0.355317, 0.615166, 1, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_23eby"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_77eex"]
+size = Vector3(1, 2, 1)
+
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("shooting_component", "health_system") groups=["Player"]]
 script = ExtResource("1_6rd3n")
-speed = 8.0
+speed = 12.0
 jump_force = 6.0
 shooting_component = NodePath("Components/Shooting")
 health_system = NodePath("Components/HealthSystem")
@@ -33,7 +36,7 @@ material_override = SubResource("StandardMaterial3D_6qtfk")
 mesh = SubResource("BoxMesh_m83oc")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 3, 5)
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 2, 4)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_d2cf7")
@@ -42,12 +45,20 @@ mesh = SubResource("CapsuleMesh_xg8t5")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_23eby")
 
+[node name="HurtBox" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HurtBox"]
+shape = SubResource("BoxShape3D_77eex")
+
 [node name="Components" type="Node3D" parent="."]
 
-[node name="Shooting" parent="Components" node_paths=PackedStringArray("spawn_position") instance=ExtResource("2_ojpoo")]
-firerate = 0.5
+[node name="Shooting" parent="Components" node_paths=PackedStringArray("spawn_position", "camera") instance=ExtResource("2_ojpoo")]
+firerate = 0.4
 projectile = ExtResource("3_yc837")
 spawn_position = NodePath("SpawnPosition")
+camera = NodePath("../../Camera3D")
 
 [node name="HealthSystem" type="Node3D" parent="Components"]
 script = ExtResource("4_plgsg")
+
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
