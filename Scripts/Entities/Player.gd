@@ -12,6 +12,8 @@ extends CharacterBody3D
 @export var shooting_component: Shooting
 @export var health_system: HealthSystem
 
+var is_aiming: bool = false
+
 func _ready() -> void:
 	shooting_component.can_shoot = true
 
@@ -19,6 +21,12 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		rotate_y(deg_to_rad(-event.relative.x * mouse_sensitivity))
  
+func _process(delta: float) -> void:
+	shooting_component.aim()
+	
+	if health_system.is_health_zero():
+		get_tree().reload_current_scene()
+
 func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("Shoot"):
 		shooting_component.shoot_projectile()
@@ -43,3 +51,7 @@ func movement(delta):
 		velocity.z = move_toward(velocity.z, 0, speed)
 
 	move_and_slide()
+
+func _on_hurt_box_area_entered(area: Area3D) -> void:
+	if area is Projectile:
+		health_system.drop_health(area.projectile_damage)
