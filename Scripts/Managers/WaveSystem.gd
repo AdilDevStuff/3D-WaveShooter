@@ -26,7 +26,6 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	game_ui.set_wave_count(wave_count)
-	print_rich("[color=#C22124][b] Enemies Remaining: %d [/b] [/color]" % remaining_enemies())
 
 ## Spawn random enemies from an array with a given enemy_count and spawn rate
 func spawn_enemy():
@@ -76,7 +75,6 @@ func _on_wave_started() -> void:
 	is_wave_started = true
 	game_ui.popup_prompt(2.0)
 	game_ui.set_prompt_text("Wave Started")
-	print_rich("[color=#C22124][b] Wave Started [/b] [/color]")
 
 func _on_wave_completed() -> void:
 	is_wave_started = false
@@ -87,4 +85,3 @@ func _on_wave_completed() -> void:
 	game_ui.set_prompt_text("Wave Completed! Starting next wave...")
 	
 	wave_cooldown_timer.start()
-	#print_rich("[color=#18D5FF][b] Cool down [/b] [/color]")
