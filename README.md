@@ -1,5 +1,5 @@
 # About The Project
-This game is a simple WIP 3D wave shooter game where you  have to survive as long as you can by killing the incoming enemies increasing each wave.
+This game is a simple WIP 3D wave shooter game where you  have to survive as long as you can by killing the incoming enemies increasing each wave. Using **Godot 4 Dev 5** to develop the game!
 
 # Progress So Far
 - [x] Basic Player Controller
