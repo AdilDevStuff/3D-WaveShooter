@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://bgdfpx5kxn8j5"]
+[gd_scene load_steps=14 format=3 uid="uid://bgdfpx5kxn8j5"]
 
 [ext_resource type="Script" path="res://Scripts/Entities/Enemy.gd" id="1_4clmw"]
 [ext_resource type="PackedScene" uid="uid://dwn1oclefwwxs" path="res://Assets/Components/Shooting.tscn" id="2_2fyh4"]
+[ext_resource type="Script" path="res://Scripts/Components/Shooting.gd" id="2_is7ep"]
 [ext_resource type="Script" path="res://Scripts/Components/Health.gd" id="2_ldbkw"]
 [ext_resource type="PackedScene" uid="uid://cpbjgjltqslvm" path="res://Scenes/Objects/Projectiles/EnemyProjectile.tscn" id="3_8hiib"]
 [ext_resource type="PackedScene" uid="uid://b7ptpcn67fnx4" path="res://Assets/Components/NavigationMovement.tscn" id="4_q448i"]
@@ -52,6 +53,7 @@ mesh = SubResource("BoxMesh_21uc2")
 shape = SubResource("BoxShape3D_nbtxa")
 
 [node name="ShootingRange" type="Area3D" parent="."]
+script = ExtResource("2_is7ep")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ShootingRange"]
 shape = SubResource("SphereShape3D_c12mc")

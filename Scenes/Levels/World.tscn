@@ -114,7 +114,6 @@ spawn_extents = Vector3(20, 0, 20)
 autostart = true
 
 [node name="WaveCooldownTimer" type="Timer" parent="WaveSystem"]
-wait_time = 5.0
 
 [node name="SpawnedEnemies" type="Node3D" parent="WaveSystem"]
 
@@ -139,10 +138,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 1.0
-offset_top = 648.0
-offset_right = 1152.0
-offset_bottom = 745.0
+offset_left = -575.0
+offset_right = 576.0
+offset_bottom = 97.0
 grow_horizontal = 2
 grow_vertical = 0
 label_settings = SubResource("LabelSettings_78l4r")

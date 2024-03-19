@@ -32,7 +32,7 @@ func spawn_enemy():
 	if can_spawn:
 		for i in range(enemy_count):
 			var enemy_instance = enemies.pick_random().instantiate()
-			enemy_instance.position = get_random_spawn_position(-spawn_extents.x, spawn_extents.x, -spawn_extents.y, spawn_extents.y)
+			enemy_instance.position = get_random_spawn_position(-spawn_extents.x, -spawn_extents.z, spawn_extents.x, spawn_extents.z)
 			spawned_enemies.add_child(enemy_instance)
 			await get_tree().create_timer(spawn_rate).timeout
 		can_spawn = false

@@ -21,7 +21,7 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		rotate_y(deg_to_rad(-event.relative.x * mouse_sensitivity))
  
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	shooting_component.aim()
 	
 	if health_system.is_health_zero():
