@@ -60,10 +60,9 @@ shape = SubResource("SphereShape3D_c12mc")
 
 [node name="Components" type="Node3D" parent="."]
 
-[node name="Shooting" parent="Components" node_paths=PackedStringArray("spawn_position") instance=ExtResource("2_2fyh4")]
+[node name="Shooting" parent="Components" instance=ExtResource("2_2fyh4")]
 firerate = 1.0
 projectile = ExtResource("3_8hiib")
-spawn_position = NodePath("SpawnPosition")
 
 [node name="HealthSystem" type="Node3D" parent="Components"]
 script = ExtResource("2_ldbkw")

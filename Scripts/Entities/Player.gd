@@ -12,6 +12,9 @@ extends CharacterBody3D
 @export var shooting_component: Shooting
 @export var health_system: HealthSystem
 
+@export_category("Node Paths")
+@export var health_bar: ProgressBar
+
 var is_aiming: bool = false
 
 func _ready() -> void:
@@ -22,11 +25,13 @@ func _input(event: InputEvent) -> void:
 		rotate_y(deg_to_rad(-event.relative.x * mouse_sensitivity))
  
 func _process(_delta: float) -> void:
-	shooting_component.aim()
-	
 	if health_system.is_health_zero():
 		get_tree().reload_current_scene()
-
+	
+	health_system.set_health_bar_radius()
+	health_bar.value = health_system.health
+	shooting_component.aim()
+	
 func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("Shoot"):
 		shooting_component.shoot_projectile()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bx04i0xydox35"]
+[gd_scene load_steps=14 format=3 uid="uid://bx04i0xydox35"]
 
 [ext_resource type="Script" path="res://Scripts/Entities/Player.gd" id="1_6rd3n"]
 [ext_resource type="PackedScene" uid="uid://dwn1oclefwwxs" path="res://Assets/Components/Shooting.tscn" id="2_ojpoo"]
@@ -20,12 +20,43 @@ albedo_color = Color(0.355317, 0.615166, 1, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_77eex"]
 size = Vector3(1, 2, 1)
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("shooting_component", "health_system") groups=["Player"]]
+[sub_resource type="LabelSettings" id="LabelSettings_kv7p4"]
+font_size = 48
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_amsxp"]
+bg_color = Color(1, 1, 1, 1)
+skew = Vector2(0.3, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+expand_margin_left = 3.0
+expand_margin_top = 3.0
+expand_margin_right = 3.0
+expand_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m7aic"]
+bg_color = Color(1, 0.144868, 0.144868, 1)
+skew = Vector2(0.3, 0)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("shooting_component", "health_system", "health_bar") groups=["Player"]]
 script = ExtResource("1_6rd3n")
 speed = 12.0
 jump_force = 6.0
 shooting_component = NodePath("Components/Shooting")
 health_system = NodePath("Components/HealthSystem")
+health_bar = NodePath("HealthBar/HealthBar")
 
 [node name="Hand" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
@@ -52,13 +83,42 @@ shape = SubResource("BoxShape3D_77eex")
 
 [node name="Components" type="Node3D" parent="."]
 
-[node name="Shooting" parent="Components" node_paths=PackedStringArray("spawn_position", "camera") instance=ExtResource("2_ojpoo")]
+[node name="Shooting" parent="Components" node_paths=PackedStringArray("projectile_spawn_position", "camera") instance=ExtResource("2_ojpoo")]
 firerate = 0.4
 projectile = ExtResource("3_yc837")
-spawn_position = NodePath("SpawnPosition")
+projectile_spawn_position = NodePath("SpawnPosition")
+default_camera_position = Vector3(0, 2, 4)
+aimed_camera_position = Vector3(0.98, 0.785, 1.46)
 camera = NodePath("../../Camera3D")
 
-[node name="HealthSystem" type="Node3D" parent="Components"]
+[node name="HealthSystem" type="Node3D" parent="Components" node_paths=PackedStringArray("health_bar")]
 script = ExtResource("4_plgsg")
+health_bar = NodePath("../../HealthBar/HealthBar")
+
+[node name="HealthBar" type="CanvasLayer" parent="."]
+follow_viewport_scale = 0.895
+
+[node name="AmmoCount" type="Label" parent="HealthBar"]
+offset_left = 40.0
+offset_top = 54.0
+offset_right = 167.0
+offset_bottom = 121.0
+text = "30/30"
+label_settings = SubResource("LabelSettings_kv7p4")
+
+[node name="HealthBar" type="ProgressBar" parent="HealthBar"]
+auto_translate_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = -624.0
+offset_right = 302.0
+offset_bottom = -590.0
+grow_vertical = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_amsxp")
+theme_override_styles/fill = SubResource("StyleBoxFlat_m7aic")
+value = 65.0
+show_percentage = false
 
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]

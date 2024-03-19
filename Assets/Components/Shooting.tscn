@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://Scripts/Components/Shooting.gd" id="1_rmglj"]
 
-[node name="Shooting" type="Node3D" node_paths=PackedStringArray("spawn_position")]
+[node name="Shooting" type="Node3D" node_paths=PackedStringArray("projectile_spawn_position")]
 script = ExtResource("1_rmglj")
-spawn_position = NodePath("SpawnPosition")
+projectile_spawn_position = NodePath("SpawnPosition")
 
 [node name="SpawnPosition" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.19209e-07, 0.467444, -1.00878)

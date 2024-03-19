@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://Scripts/UserInterface/gameUI.gd" id="6_ymjna"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_grwdd"]
-vertices = PackedVector3Array(-23, 1, -23, -23, 1, 23, 23, 1, 23, 23, 1, -23)
+vertices = PackedVector3Array(-48, 1, -48, -48, 1, 48, 48, 1, 48, 48, 1, -48)
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 agent_radius = 2.0
 
@@ -89,7 +89,7 @@ use_collision = true
 [node name="Ground" type="CSGBox3D" parent="NavigationRegion3D/Level"]
 material_override = SubResource("StandardMaterial3D_23pla")
 use_collision = true
-size = Vector3(50, 1, 50)
+size = Vector3(100, 1, 100)
 
 [node name="Lighting" type="Node3D" parent="."]
 
@@ -100,10 +100,11 @@ environment = SubResource("Environment_cv6bv")
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Player" parent="." node_paths=PackedStringArray("shooting_component", "health_system") instance=ExtResource("1_65s0x")]
+[node name="Player" parent="." node_paths=PackedStringArray("shooting_component", "health_system", "health_bar") instance=ExtResource("1_65s0x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 shooting_component = NodePath("Components/Shooting")
 health_system = NodePath("Components/HealthSystem")
+health_bar = NodePath("HealthBar/HealthBar")
 
 [node name="WaveSystem" type="Node3D" parent="."]
 script = ExtResource("3_0rjlg")
@@ -114,6 +115,7 @@ spawn_extents = Vector3(20, 0, 20)
 autostart = true
 
 [node name="WaveCooldownTimer" type="Timer" parent="WaveSystem"]
+wait_time = 5.0
 
 [node name="SpawnedEnemies" type="Node3D" parent="WaveSystem"]
 
@@ -138,9 +140,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -575.0
-offset_right = 576.0
-offset_bottom = 97.0
+offset_left = 1.0
+offset_top = 648.0
+offset_right = 1152.0
+offset_bottom = 745.0
 grow_horizontal = 2
 grow_vertical = 0
 label_settings = SubResource("LabelSettings_78l4r")
@@ -150,11 +153,12 @@ vertical_alignment = 1
 [node name="WaveCount" type="Label" parent="UserInterface/GameUI"]
 auto_translate_mode = 1
 layout_mode = 1
-offset_left = 32.0
-offset_right = 453.0
+offset_left = 710.0
+offset_right = 1131.0
 offset_bottom = 97.0
 text = "Wave: 0"
 label_settings = SubResource("LabelSettings_78l4r")
+horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="UIAnimations" type="AnimationPlayer" parent="UserInterface/GameUI"]
