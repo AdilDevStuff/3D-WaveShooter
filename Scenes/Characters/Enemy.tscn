@@ -1,9 +1,9 @@
 [gd_scene load_steps=14 format=3 uid="uid://bgdfpx5kxn8j5"]
 
-[ext_resource type="Script" path="res://Scripts/Entities/Enemy.gd" id="1_4clmw"]
+[ext_resource type="Script" uid="uid://b5hn5wnetajjm" path="res://Scripts/Entities/Enemy.gd" id="1_4clmw"]
 [ext_resource type="PackedScene" uid="uid://dwn1oclefwwxs" path="res://Assets/Components/Shooting.tscn" id="2_2fyh4"]
-[ext_resource type="Script" path="res://Scripts/Components/Shooting.gd" id="2_is7ep"]
-[ext_resource type="Script" path="res://Scripts/Components/Health.gd" id="2_ldbkw"]
+[ext_resource type="Script" uid="uid://buqq8dx32nt17" path="res://Scripts/Components/Shooting.gd" id="2_is7ep"]
+[ext_resource type="Script" uid="uid://c2tlkr8df4gqx" path="res://Scripts/Components/Health.gd" id="2_ldbkw"]
 [ext_resource type="PackedScene" uid="uid://cpbjgjltqslvm" path="res://Scenes/Objects/Projectiles/EnemyProjectile.tscn" id="3_8hiib"]
 [ext_resource type="PackedScene" uid="uid://b7ptpcn67fnx4" path="res://Assets/Components/NavigationMovement.tscn" id="4_q448i"]
 

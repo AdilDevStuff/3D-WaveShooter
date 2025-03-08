@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://c1rgj63y02aj4"]
 
 [ext_resource type="PackedScene" uid="uid://cpbjgjltqslvm" path="res://Scenes/Objects/Projectiles/EnemyProjectile.tscn" id="1_r41io"]
-[ext_resource type="Script" path="res://Scripts/Projectiles/PlayerProjectile.gd" id="2_s21tj"]
+[ext_resource type="Script" uid="uid://djnd3d8fo5e6m" path="res://Scripts/Projectiles/PlayerProjectile.gd" id="2_s21tj"]
 
 [node name="PlayerProjectile" groups=["PlayerProjectile"] instance=ExtResource("1_r41io")]
 script = ExtResource("2_s21tj")

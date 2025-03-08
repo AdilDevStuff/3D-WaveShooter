@@ -1,9 +1,9 @@
 [gd_scene load_steps=14 format=3 uid="uid://bx04i0xydox35"]
 
-[ext_resource type="Script" path="res://Scripts/Entities/Player.gd" id="1_6rd3n"]
+[ext_resource type="Script" uid="uid://da64lo471bjyd" path="res://Scripts/Entities/Player.gd" id="1_6rd3n"]
 [ext_resource type="PackedScene" uid="uid://dwn1oclefwwxs" path="res://Assets/Components/Shooting.tscn" id="2_ojpoo"]
 [ext_resource type="PackedScene" uid="uid://c1rgj63y02aj4" path="res://Scenes/Objects/Projectiles/PlayerProjectile.tscn" id="3_yc837"]
-[ext_resource type="Script" path="res://Scripts/Components/Health.gd" id="4_plgsg"]
+[ext_resource type="Script" uid="uid://c2tlkr8df4gqx" path="res://Scripts/Components/Health.gd" id="4_plgsg"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6qtfk"]
 albedo_color = Color(0.299547, 0.299547, 0.299547, 1)

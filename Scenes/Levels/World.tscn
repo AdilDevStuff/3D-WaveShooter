@@ -1,11 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://bjmpugxgb6x2r"]
+[gd_scene load_steps=17 format=3 uid="uid://bjmpugxgb6x2r"]
 
 [ext_resource type="PackedScene" uid="uid://bx04i0xydox35" path="res://Scenes/Characters/Player.tscn" id="1_65s0x"]
-[ext_resource type="Script" path="res://Scripts/World.gd" id="1_dhco0"]
+[ext_resource type="Script" uid="uid://rveqjam1jmt4" path="res://Scripts/World.gd" id="1_dhco0"]
 [ext_resource type="PackedScene" uid="uid://bgdfpx5kxn8j5" path="res://Scenes/Characters/Enemy.tscn" id="2_3dunr"]
-[ext_resource type="Script" path="res://Scripts/Managers/WaveSystem.gd" id="3_0rjlg"]
-[ext_resource type="Script" path="res://Scripts/Managers/GameManager.gd" id="5_8nn06"]
-[ext_resource type="Script" path="res://Scripts/UserInterface/gameUI.gd" id="6_ymjna"]
+[ext_resource type="Script" uid="uid://lf58k3st0pnq" path="res://Scripts/Managers/WaveSystem.gd" id="3_0rjlg"]
+[ext_resource type="Script" uid="uid://cwumjapd2378q" path="res://Scripts/Managers/GameManager.gd" id="5_8nn06"]
+[ext_resource type="Script" uid="uid://b7n8ghh2f53qi" path="res://Scripts/UserInterface/gameUI.gd" id="6_ymjna"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_grwdd"]
 vertices = PackedVector3Array(-48, 1, -48, -48, 1, 48, 48, 1, 48, 48, 1, -48)
@@ -14,6 +14,9 @@ agent_radius = 2.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_23pla"]
 albedo_color = Color(0.415032, 0.819067, 0.404147, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f4gmh"]
+albedo_color = Color(0.452385, 0.724026, 0.300113, 1)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_37o3u"]
 sky_top_color = Color(0.21137, 0.249742, 0.303129, 1)
@@ -73,8 +76,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8eiio"]
 _data = {
-"PromptEnter": SubResource("Animation_1ghcc"),
-"RESET": SubResource("Animation_bf4ym")
+&"PromptEnter": SubResource("Animation_1ghcc"),
+&"RESET": SubResource("Animation_bf4ym")
 }
 
 [node name="World" type="Node3D"]
@@ -90,6 +93,7 @@ use_collision = true
 material_override = SubResource("StandardMaterial3D_23pla")
 use_collision = true
 size = Vector3(100, 1, 100)
+material = SubResource("StandardMaterial3D_f4gmh")
 
 [node name="Lighting" type="Node3D" parent="."]
 
@@ -100,11 +104,8 @@ environment = SubResource("Environment_cv6bv")
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Player" parent="." node_paths=PackedStringArray("shooting_component", "health_system", "health_bar") instance=ExtResource("1_65s0x")]
+[node name="Player" parent="." instance=ExtResource("1_65s0x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-shooting_component = NodePath("Components/Shooting")
-health_system = NodePath("Components/HealthSystem")
-health_bar = NodePath("HealthBar/HealthBar")
 
 [node name="WaveSystem" type="Node3D" parent="."]
 script = ExtResource("3_0rjlg")
@@ -140,10 +141,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 1.0
-offset_top = 648.0
-offset_right = 1152.0
-offset_bottom = 745.0
+offset_left = -575.0
+offset_right = 576.0
+offset_bottom = 97.0
 grow_horizontal = 2
 grow_vertical = 0
 label_settings = SubResource("LabelSettings_78l4r")
@@ -163,7 +163,7 @@ vertical_alignment = 1
 
 [node name="UIAnimations" type="AnimationPlayer" parent="UserInterface/GameUI"]
 libraries = {
-"": SubResource("AnimationLibrary_8eiio")
+&"": SubResource("AnimationLibrary_8eiio")
 }
 
 [connection signal="wave_completed" from="WaveSystem" to="WaveSystem" method="_on_wave_completed"]

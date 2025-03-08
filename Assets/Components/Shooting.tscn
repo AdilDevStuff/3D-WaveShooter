@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dwn1oclefwwxs"]
 
-[ext_resource type="Script" path="res://Scripts/Components/Shooting.gd" id="1_rmglj"]
+[ext_resource type="Script" uid="uid://buqq8dx32nt17" path="res://Scripts/Components/Shooting.gd" id="1_rmglj"]
 
 [node name="Shooting" type="Node3D" node_paths=PackedStringArray("projectile_spawn_position")]
 script = ExtResource("1_rmglj")

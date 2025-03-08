@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://6ebjd8k5bc1g"]
 
-[ext_resource type="Script" path="res://Scripts/Projectiles/Projectile.gd" id="1_pyad8"]
+[ext_resource type="Script" uid="uid://61e610ke131x" path="res://Scripts/Projectiles/Projectile.gd" id="1_pyad8"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_1pstw"]
 
